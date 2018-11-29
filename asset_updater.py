@@ -24,8 +24,10 @@ ws = book.get_worksheet(0)
 body = 'Symbol, Gain/Loss, Change %\n'
 for row in rows_with_symbols:
     current_row = ws.row_values(row)
-    body = body + current_row[0].ljust(8) + ' ' +current_row[8].rjust(8) +' '+ current_row[6]+'%\n'
-body += ws.acell('F15').value + ' ' + ws.acell('I15').value +' '+ ws.acell('G15').value
+    body = body + current_row[0].ljust(6) + ' ' +current_row[6].rjust(4) +' '+ current_row[8]+'\n'
+body += '\n' + ws.acell('F15').value + ' ' + ws.acell('I15').value +' '+ ws.acell('G15').value
+print(body)
+
 
 message = client.messages.create(
     to = '+17343581630',
