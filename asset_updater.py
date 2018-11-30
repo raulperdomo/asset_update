@@ -17,8 +17,17 @@ gc = gspread.authorize(credentials)
 
 #Open Google Sheet
 book = gc.open('Investments')
-rows_with_symbols = [2,3,4,5,7,8,9,10]
 ws = book.get_worksheet(0)
+
+#Grab column C to check if it has a number of shares owned, if so add it to list of rows to gather data from.
+colC = ws.col_values(3)[1:]
+index = 2
+rows_with_symbols = []
+
+for row in colC:
+    if row:
+        rows_with_symbols.append(index)
+    index += 1
 
 #Craft Text Message
 body = 'Symbol, Change %, Gain/Loss\n'
@@ -28,9 +37,10 @@ for row in rows_with_symbols:
 body += '\n' + ws.acell('F15').value + ' ' + ws.acell('I15').value +' '+ ws.acell('G15').value
 print(body)
 
-
+''' Only uncomment this is you want to send texts. 
 message = client.messages.create(
     to = '+17343581630',
     from_= '+17343596302',
     body=body)
 print(message.sid)
+'''
