@@ -56,7 +56,7 @@ rows = len(ws.col_values(1))
 print(dayTotal)
 print(float(dayTotal.strip('$').replace(',','')))
 
-ws.update_acell(f'A{rows+1}', timedelt)
+ws.update_acell(f'A{rows+1}', str(timedelt.days))
 ws.update_acell(f'b{rows+1}', f'{dayTotal}')
 ws.update_acell(f'c{rows+1}', f'{sheet2total}')
 ws.update_acell(f'd{rows+1}', f"={float(dayTotal.strip('$').replace(',',''))}+{float(sheet2total.strip('$').replace(',',''))}")
