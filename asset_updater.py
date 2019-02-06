@@ -1,4 +1,4 @@
-import gspread, json, time
+import gspread, json, time, datetime
 from twilio.rest import Client
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -18,6 +18,9 @@ gc = gspread.authorize(credentials)
 #Open Google Sheet
 book = gc.open('Investments')
 ws = book.get_worksheet(0)
+epoch = datetime.date(1899,12,30)
+today = datetime.date.today()
+timedelt = today - epoch
 
 #Hoping this sleep with allow the sheet to update values.
 time.sleep(10)
@@ -53,7 +56,7 @@ rows = len(ws.col_values(1))
 print(dayTotal)
 print(float(dayTotal.strip('$').replace(',','')))
 
-ws.update_acell(f'A{rows+1}', '=today()')
+ws.update_acell(f'A{rows+1}', timedelt)
 ws.update_acell(f'b{rows+1}', f'{dayTotal}')
 ws.update_acell(f'c{rows+1}', f'{sheet2total}')
 ws.update_acell(f'd{rows+1}', f"={float(dayTotal.strip('$').replace(',',''))}+{float(sheet2total.strip('$').replace(',',''))}")
